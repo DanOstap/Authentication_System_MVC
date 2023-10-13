@@ -1,0 +1,53 @@
+﻿@model DataBaseModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="grid">
+
+
+    <div class="form login" id="myForm">
+
+        <div class="form__field">
+            <label for="login__username"><svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use></svg><span class="hidden">Username</span></label>
+            <input asp-for = "UserName" id="login__username" type="text" name="username" class="form__input" placeholder="Username" required>
+        </div>
+
+        <div class="form__field">
+            <label for="login__password"><svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lock"></use></svg><span class="hidden">Password</span></label>
+            <input asp-for = "Password" id="login__password" type="password" name="password" class="form__input" placeholder="Password" required>
+        </div>
+
+        <div class="form__field">
+            <input type="button" value="Sign In" onclick="LogInButton()"> 
+        </div>
+
+    </div>
+
+    <p class="text--center">Not a member? <a href="@Url.Action("RegistView","Home")">Sign up now</a> <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="assets/images/icons.svg#arrow-right"></use></svg></p>
+
+</div>
+
+<script>
+    function LogInButton() {
+        let test1 = document.getElementsByClassName("form__input");
+        $.ajax({
+            url: 'https://localhost:7149/Reg/',
+            type: 'Post',
+            contentType: "application/json; charset=UTF-8",
+            data: JSON.stringify({
+                UserName: test1[0].value,
+                Password: test1[1].value
+            }),
+            dataType: 'json',
+            success: function (data,status) { 
+                alert(data);
+                alert(status)
+            },
+            error: function (error) {
+                console.log(error);
+            },
+        });
+    }
+
+</script>
